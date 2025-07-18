@@ -11,6 +11,15 @@ npm install
 ```
 
 The `postinstall` script in `package.json` will install the Next.js dependencies automatically.
+### Configure your OpenAI API key
+
+Create a `.env.local` file inside the `jesse-next-js` folder and add your key:
+
+```bash
+cat << 'EOF' > jesse-next-js/.env.local
+OPENAI_API_KEY=YOUR_OPENAI_API_KEY_HERE
+EOF
+```
 
 ## Available Scripts
 
