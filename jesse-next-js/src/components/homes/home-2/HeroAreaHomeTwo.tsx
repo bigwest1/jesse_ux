@@ -49,12 +49,12 @@ const HeroAreaHomeTwo = () => {
                   {/* Thought bubbles above head */}
                   {messages.map((msg, idx) => {
                     // Dynamic bubble width and positioning
-                    const width = Math.min(400, Math.max(160, msg.length * 16));
-                    // Lift all bubbles by 75px; flip the leftmost bubble horizontally
+                    const width = Math.min(400, Math.max(160, msg.length * 12));
+                    // Three slots: left, middle, right; raise all by 75px
                     const positions = [
-                      { right: '120px', bottom: 'calc(60% + 75px)' },
-                      { right: '40px', bottom: 'calc(65% + 75px)' },
-                      { right: '-80px', bottom: 'calc(58% + 75px)' },
+                      { left: '30%', top: '15%', transform: 'translateX(-100%)' },
+                      { left: '50%', top: '10%', transform: 'translateX(-50%)' },
+                      { left: '70%', top: '15%', transform: 'translateX(0)' },
                     ];
                     const pos = positions[idx] || positions[2];
                     return (
