@@ -48,21 +48,23 @@ const HeroAreaHomeTwo = () => {
                   </div>
                   {/* Thought bubbles above head */}
                   {messages.map((msg, idx) => {
-                    // Dynamic bubble width and positioning
+                    // Dynamic bubble width
                     const width = Math.min(400, Math.max(160, msg.length * 12));
-                    // Three slots: left, middle, right; raise all by 75px
-                    const positions = [
-                      { left: '30%', top: '15%', transform: 'translateX(-100%)' },
-                      { left: '50%', top: '10%', transform: 'translateX(-50%)' },
+                    // Define right, center, left slots (all lifted by ~75px)
+                    const slots = [
                       { left: '70%', top: '15%', transform: 'translateX(0)' },
+                      { left: '50%', top: '10%', transform: 'translateX(-50%)' },
+                      { left: '30%', top: '15%', transform: 'translateX(-100%)' },
                     ];
-                    const pos = positions[idx] || positions[2];
+                    const offset = slots.length - messages.length;
+                    const slotIndex = Math.min(slots.length - 1, Math.max(0, offset + idx));
+                    const pos = slots[slotIndex];
                     return (
                       <div
                         key={idx + msg}
                         style={{ position: 'absolute', transition: 'all 0.5s ease', ...pos }}
                       >
-                        <ThoughtBubble text={msg} width={width} flipped={idx === 0} />
+                        <ThoughtBubble text={msg} width={width} flipped={slotIndex === 2} />
                       </div>
                     );
                   })}
