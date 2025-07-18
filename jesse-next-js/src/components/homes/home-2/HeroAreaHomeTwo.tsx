@@ -42,19 +42,19 @@ const HeroAreaHomeTwo = () => {
             </div>
             <div className="row">
               <div className="col-xl-12">
-                <div className="tp-hero-2__thumb-wrap p-relative text-center">
+                <div className="tp-hero-2__thumb-wrap p-relative text-center" style={{ overflow: 'visible' }}>
                   <div className="tp-hero-2__thumb z-index-5">
                     <Image className="tp-mouse-move-element" src={hero_img_2} style={{height: 'auto'}} alt="image-here" />
                   </div>
                   {/* Thought bubbles above head */}
                   {messages.map((msg, idx) => {
-                    // Calculate dynamic width based on message length
-                    const width = Math.min(280, Math.max(140, msg.length * 8));
-                    // positions: [left, middle, right]
+                    // Dynamic bubble width and positioning
+                    const width = Math.min(400, Math.max(160, msg.length * 16));
+                    // Lift all bubbles by 75px; flip the leftmost bubble horizontally
                     const positions = [
-                      { right: '120px', bottom: '60%' },
-                      { right: '40px', bottom: '65%' },
-                      { right: '-80px', bottom: '58%' },
+                      { right: '120px', bottom: 'calc(60% + 75px)' },
+                      { right: '40px', bottom: 'calc(65% + 75px)' },
+                      { right: '-80px', bottom: 'calc(58% + 75px)' },
                     ];
                     const pos = positions[idx] || positions[2];
                     return (
@@ -62,7 +62,7 @@ const HeroAreaHomeTwo = () => {
                         key={idx + msg}
                         style={{ position: 'absolute', transition: 'all 0.5s ease', ...pos }}
                       >
-                        <ThoughtBubble text={msg} width={width} />
+                        <ThoughtBubble text={msg} width={width} flipped={idx === 0} />
                       </div>
                     );
                   })}

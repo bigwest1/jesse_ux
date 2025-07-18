@@ -7,6 +7,8 @@ export interface ThoughtBubbleProps {
   width?: number;
   /** Optional height override in pixels; defaults to aspect ratio of bubble */
   height?: number;
+  /** Flip bubble horizontally (for left-side placement) */
+  flipped?: boolean;
   /** CSS class name for additional styling */
   className?: string;
 }
@@ -26,8 +28,8 @@ const ThoughtBubble: React.FC<ThoughtBubbleProps> = ({
   const vw = 120;
   const vh = 80;
 
-  // Simple word-wrap based on character count
-  const maxCharsPerLine = 20;
+  // Word-wrap: max chars per line based on width (approximate)
+  const maxCharsPerLine = Math.max(10, Math.floor(width / 10));
   const words = text.split(' ');
   const lines: string[] = [];
   let current = '';
@@ -56,21 +58,22 @@ const ThoughtBubble: React.FC<ThoughtBubbleProps> = ({
           <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="#000" floodOpacity="0.2" />
         </filter>
       </defs>
-      {/* main cloud shape */}
-      <path
-        d="M20,50
-          c-12,0 -20,-8 -20,-20 0,-8 4,-14 10,-17
-          c2,-10 12,-18 24,-18 14,0 26,10 26,24
-          c12,1 22,12 22,24 0,14 -12,26 -26,26 h-40 z"
-        fill="#0070f3"
-        stroke="#fff"
-        strokeWidth="4"
-        filter="url(#bubble-shadow)"
-      />
-      {/* tail circles (spaced sticker style) */}
-      <circle cx="28" cy="60" r="4" fill="#0070f3" stroke="#fff" strokeWidth="3" filter="url(#bubble-shadow)" />
-      <circle cx="46" cy="68" r="5" fill="#0070f3" stroke="#fff" strokeWidth="3" filter="url(#bubble-shadow)" />
-      <circle cx="64" cy="74" r="6" fill="#0070f3" stroke="#fff" strokeWidth="3" filter="url(#bubble-shadow)" />
+      {/* main cloud shape + tail group, flipped if needed */}
+      <g transform={flipped ? `translate(${vw},0) scale(-1,1)` : undefined} filter="url(#bubble-shadow)">
+        <path
+          d="M20,50
+            c-12,0 -20,-8 -20,-20 0,-8 4,-14 10,-17
+            c2,-10 12,-18 24,-18 14,0 26,10 26,24
+            c12,1 22,12 22,24 0,14 -12,26 -26,26 h-40 z"
+          fill="#0070f3"
+          stroke="#fff"
+          strokeWidth="4"
+        />
+        {/* tail circles (spaced sticker style) */}
+        <circle cx="28" cy="60" r="4" fill="#0070f3" stroke="#fff" strokeWidth="3" />
+        <circle cx="46" cy="68" r="5" fill="#0070f3" stroke="#fff" strokeWidth="3" />
+        <circle cx="64" cy="74" r="6" fill="#0070f3" stroke="#fff" strokeWidth="3" />
+      </g>
       {/* text lines, centered */}
       <text
         x="50%"
