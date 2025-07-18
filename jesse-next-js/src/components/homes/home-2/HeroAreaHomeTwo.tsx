@@ -46,12 +46,33 @@ const HeroAreaHomeTwo = () => {
                   <div className="tp-hero-2__thumb z-index-5">
                     <Image className="tp-mouse-move-element" src={hero_img_2} style={{height: 'auto'}} alt="image-here" />
                   </div>
+                  {/* Thought bubbles above head */}
+                  {messages.map((msg, idx) => {
+                    // Calculate dynamic width based on message length
+                    const width = Math.min(280, Math.max(140, msg.length * 8));
+                    // positions: [left, middle, right]
+                    const positions = [
+                      { right: '120px', bottom: '60%' },
+                      { right: '40px', bottom: '65%' },
+                      { right: '-80px', bottom: '58%' },
+                    ];
+                    const pos = positions[idx] || positions[2];
+                    return (
+                      <div
+                        key={idx + msg}
+                        style={{ position: 'absolute', transition: 'all 0.5s ease', ...pos }}
+                      >
+                        <ThoughtBubble text={msg} width={width} />
+                      </div>
+                    );
+                  })}
                   <div className="tp-hero-2__thumb-shape d-none d-md-block">
                     <span>
                       <HeroShapeHomeTwo />
                     </span>
                   </div>
                   {/* AI Chat input overlay: partly overlapping image on bottom-right */}
+                  {/* Chat input box */}
                   <div
                     className="ai-chat-input d-none d-md-flex"
                     style={{
@@ -81,10 +102,7 @@ const HeroAreaHomeTwo = () => {
                           const json = await res.json();
                           if (json.error) throw new Error(json.error);
                           const reply = json.text?.trim() ?? '';
-                          setMessages(prev => {
-                            const next = prev.length === 3 ? [...prev.slice(1), reply] : [...prev, reply];
-                            return next;
-                          });
+                          setMessages(prev => (prev.length === 3 ? [...prev.slice(1), reply] : [...prev, reply]));
                         } catch (err) {
                           console.error('Chat error:', err);
                         }
@@ -116,29 +134,6 @@ const HeroAreaHomeTwo = () => {
                         Send
                       </button>
                     </form>
-
-                    {/* thought bubbles display */}
-                    {messages.map((msg, idx) => {
-                      // position order: 0=left,1=middle,2=right
-                      const positions = [
-                        { right: '120px', bottom: '60%' },
-                        { right: '40px', bottom: '65%' },
-                        { right: '-80px', bottom: '58%' },
-                      ];
-                      const pos = positions[idx] || positions[2];
-                      return (
-                        <div
-                          key={idx + msg}
-                          style={{
-                            position: 'absolute',
-                            transition: 'all 0.5s ease',
-                            ...pos,
-                          }}
-                        >
-                          <ThoughtBubble text={msg} width={160} />
-                        </div>
-                      );
-                    })}
                   </div>
                 </div>
               </div>

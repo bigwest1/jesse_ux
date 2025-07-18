@@ -75,7 +75,7 @@ const ThoughtBubble: React.FC<ThoughtBubbleProps> = ({
       <text
         x="50%"
         y="30"
-        fontSize="8"
+        fontSize="10"
         fontFamily="Inter, sans-serif"
         fill="#fff"
         textAnchor="middle"
