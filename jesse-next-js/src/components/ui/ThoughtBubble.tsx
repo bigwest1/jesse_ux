@@ -17,7 +17,7 @@ export interface ThoughtBubbleProps {
  * Lightweight thought bubble SVG with sticker-style white border and drop shadow.
  * Renders up to three circles tail and wraps text automatically.
  */
-const ThoughtBubble: React.FC<ThoughtBubbleProps> = ({ text, width = 200, className }) => {
+const ThoughtBubble: React.FC<ThoughtBubbleProps> = ({ text, width = 200, flipped, className }) => {
   const tailCircles = [
     { offset: 16, bottom: -6, size: 8 },
     { offset: 36, bottom: -10, size: 10 },
