@@ -61,7 +61,11 @@ const HeroAreaHomeTwo = () => {
                     const pos = slots[base + idx] || slots[2];
                     return (
                       <div key={idx + msg} style={{ position: 'absolute', transition: 'all 0.5s ease', ...pos }}>
-                        <ThoughtBubble text={msg} width={width} flipped={idx === 0 && messages.length === 3} />
+                        <ThoughtBubble
+                          text={msg}
+                          width={width}
+                          flipped={base + idx === 2}
+                        />
                       </div>
                     );
                   })}
