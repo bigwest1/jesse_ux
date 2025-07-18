@@ -50,21 +50,18 @@ const HeroAreaHomeTwo = () => {
                   {messages.map((msg, idx) => {
                     // Dynamic bubble width
                     const width = Math.min(400, Math.max(160, msg.length * 12));
-                    // Define right, center, left slots (all lifted by ~75px)
+                    // right, center, left slots
                     const slots = [
                       { left: '70%', top: '15%', transform: 'translateX(0)' },
                       { left: '50%', top: '10%', transform: 'translateX(-50%)' },
                       { left: '30%', top: '15%', transform: 'translateX(-100%)' },
                     ];
-                    const offset = slots.length - messages.length;
-                    const slotIndex = Math.min(slots.length - 1, Math.max(0, offset + idx));
-                    const pos = slots[slotIndex];
+                    // Position messages so newest always on the right
+                    const base = Math.max(0, slots.length - messages.length);
+                    const pos = slots[base + idx] || slots[2];
                     return (
-                      <div
-                        key={idx + msg}
-                        style={{ position: 'absolute', transition: 'all 0.5s ease', ...pos }}
-                      >
-                        <ThoughtBubble text={msg} width={width} flipped={slotIndex === 2} />
+                      <div key={idx + msg} style={{ position: 'absolute', transition: 'all 0.5s ease', ...pos }}>
+                        <ThoughtBubble text={msg} width={width} flipped={idx === 0 && messages.length === 3} />
                       </div>
                     );
                   })}
