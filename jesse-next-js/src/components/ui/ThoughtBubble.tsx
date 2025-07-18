@@ -19,9 +19,9 @@ export interface ThoughtBubbleProps {
  */
 const ThoughtBubble: React.FC<ThoughtBubbleProps> = ({ text, width = 200, className }) => {
   const tailCircles = [
-    { left: 16, bottom: -6, size: 8 },
-    { left: 36, bottom: -10, size: 10 },
-    { left: 58, bottom: -14, size: 12 },
+    { offset: 16, bottom: -6, size: 8 },
+    { offset: 36, bottom: -10, size: 10 },
+    { offset: 58, bottom: -14, size: 12 },
   ];
   return (
     <div
@@ -45,7 +45,7 @@ const ThoughtBubble: React.FC<ThoughtBubbleProps> = ({ text, width = 200, classN
           key={i}
           style={{
             position: 'absolute',
-            left: tc.left,
+            ...(flipped ? { right: tc.offset } : { left: tc.offset }),
             bottom: tc.bottom,
             width: tc.size,
             height: tc.size,
