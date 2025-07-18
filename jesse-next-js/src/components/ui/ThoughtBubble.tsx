@@ -56,7 +56,7 @@ const ThoughtBubble: React.FC<ThoughtBubbleProps> = ({
         return raw.map((t, i) => ({
           offsetPct: t.offsetPct,
           bottom: revBots[i],
-          size: raw[raw.length - 1 - i].size,
+          size: raw[i].size,
         }));
       })()
     : [];
