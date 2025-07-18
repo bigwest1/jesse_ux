@@ -21,6 +21,7 @@ const ThoughtBubble: React.FC<ThoughtBubbleProps> = ({
   text,
   width = 200,
   height,
+  flipped,
   className,
 }) => {
   // Maintain 3:2 aspect ratio if height not provided
