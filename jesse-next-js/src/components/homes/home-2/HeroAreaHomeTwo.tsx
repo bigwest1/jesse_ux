@@ -51,10 +51,11 @@ const HeroAreaHomeTwo = () => {
                     // Dynamic bubble width
                     const width = Math.min(400, Math.max(160, msg.length * 12));
                     // right, center, left slots
+                    const bubbleTop = 'calc(8% - 100px)';
                     const slots = [
-                      { left: '30%', top: 'calc(8% - 100px)', transform: 'translateX(-100%)' },
-                      { left: '50%', top: 'calc(4% - 100px)', transform: 'translateX(-50%)' },
-                      { left: '70%', top: 'calc(0% - 100px)', transform: 'translateX(0)' },
+                      { left: '30%', top: bubbleTop, transform: 'translateX(-100%)' },
+                      { left: '50%', top: bubbleTop, transform: 'translateX(-50%)' },
+                      { left: '70%', top: bubbleTop, transform: 'translateX(0)' },
                     ];
                     // Position messages so newest always on the right
                     const base = Math.max(0, slots.length - messages.length);
@@ -66,6 +67,7 @@ const HeroAreaHomeTwo = () => {
                           text={msg}
                           width={width}
                           orientation={orient as any}
+                          showTail={idx === messages.length - 1}
                         />
                       </div>
                     );
