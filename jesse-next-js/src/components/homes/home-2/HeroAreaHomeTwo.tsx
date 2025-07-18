@@ -52,9 +52,9 @@ const HeroAreaHomeTwo = () => {
                     const width = Math.min(400, Math.max(160, msg.length * 12));
                     // right, center, left slots
                     const slots = [
-                      { left: '70%', top: '15%', transform: 'translateX(0)' },
-                      { left: '50%', top: '10%', transform: 'translateX(-50%)' },
-                      { left: '30%', top: '15%', transform: 'translateX(-100%)' },
+                      { left: '70%', top: '8%', transform: 'translateX(0)' },
+                      { left: '50%', top: '4%', transform: 'translateX(-50%)' },
+                      { left: '30%', top: '8%', transform: 'translateX(-100%)' },
                     ];
                     // Position messages so newest always on the right
                     const base = Math.max(0, slots.length - messages.length);
