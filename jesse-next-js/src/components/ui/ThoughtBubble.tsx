@@ -49,7 +49,7 @@ const ThoughtBubble: React.FC<ThoughtBubbleProps> = ({
   // Only the latest bubble shows tails, flipped vertically and lowered slightly
   const tails = showTail
     ? (() => {
-        const extra = 10;
+        const extra = 20;
         // preserve distance magnitudes, reverse vertical order, and lower group
         const mags = raw.map(t => Math.abs(t.bottom));
         const revBots = mags.reverse().map(m => -(m + extra));
