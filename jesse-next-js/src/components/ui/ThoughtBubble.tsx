@@ -28,8 +28,6 @@ const ThoughtBubble: React.FC<ThoughtBubbleProps> = ({
   const h = height ?? Math.round((width * 2) / 3);
   const vw = 120;
   const vh = 80;
-  // vertical scale factor for cloud shape to fit dynamic height
-  const yScale = h / vh;
 
   // Word-wrap: max chars per line based on width (approximate)
   const maxCharsPerLine = Math.max(10, Math.floor(width / 10));
@@ -51,7 +49,7 @@ const ThoughtBubble: React.FC<ThoughtBubbleProps> = ({
       className={className}
       width={width}
       height={h}
-      viewBox={`0 0 ${vw} ${vh}`}
+      viewBox={`-10 -10 ${vw + 20} ${vh + 20}`}
       preserveAspectRatio="xMinYMin meet"
       xmlns="http://www.w3.org/2000/svg"
       role="img"
@@ -63,14 +61,7 @@ const ThoughtBubble: React.FC<ThoughtBubbleProps> = ({
         </filter>
       </defs>
       {/* main cloud shape + tail, scaled to height and flipped if needed */}
-      <g
-        transform={
-          flipped
-            ? `translate(${vw},0) scale(-1,1) scale(1,${yScale})`
-            : `scale(1,${yScale})`
-        }
-        filter="url(#bubble-shadow)"
-      >
+      <g transform={flipped ? `translate(${vw},0) scale(-1,1)` : undefined} filter="url(#bubble-shadow)">
         <path
           d="M20,50
             c-12,0 -20,-8 -20,-20 0,-8 4,-14 10,-17
@@ -85,10 +76,10 @@ const ThoughtBubble: React.FC<ThoughtBubbleProps> = ({
         <circle cx="46" cy="68" r="5" fill="#0070f3" stroke="#fff" strokeWidth="3" />
         <circle cx="64" cy="74" r="6" fill="#0070f3" stroke="#fff" strokeWidth="3" />
       </g>
-      {/* text lines, centered above cloud */}
+      {/* text lines, centered inside cloud */}
       <text
         x="50%"
-        y={30 * yScale}
+        y="30"
         fontSize="8"
         fontFamily="Inter, sans-serif"
         fill="#fff"
