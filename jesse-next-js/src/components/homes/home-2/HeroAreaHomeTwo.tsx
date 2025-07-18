@@ -59,12 +59,13 @@ const HeroAreaHomeTwo = () => {
                     // Position messages so newest always on the right
                     const base = Math.max(0, slots.length - messages.length);
                     const pos = slots[base + idx] || slots[2];
+                    const orient = ['left', 'center', 'right'][base + idx] || 'right';
                     return (
                       <div key={idx + msg} style={{ position: 'absolute', transition: 'all 0.5s ease', ...pos }}>
                         <ThoughtBubble
                           text={msg}
                           width={width}
-                          flipped={base + idx === 2}
+                          orientation={orient as any}
                         />
                       </div>
                     );
