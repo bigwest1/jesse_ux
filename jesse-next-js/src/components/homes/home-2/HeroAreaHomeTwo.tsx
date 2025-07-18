@@ -1,11 +1,14 @@
 
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import hero_img_1 from "@/assets/img/hero/2/hero-stroke-text.png";
 import hero_img_2 from "@/assets/img/hero/hero-2-img.png";
 import HeroShapeHomeTwo from '@/svg/home-2/HeroShapeHomeTwo';
+import ThoughtBubble from '@/components/ui/ThoughtBubble';
 
 const HeroAreaHomeTwo = () => {
+  const [messages, setMessages] = useState<string[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
   return (
     <>
 
@@ -45,8 +48,97 @@ const HeroAreaHomeTwo = () => {
                   </div>
                   <div className="tp-hero-2__thumb-shape d-none d-md-block">
                     <span>
-                      <HeroShapeHomeTwo /> 
+                      <HeroShapeHomeTwo />
                     </span>
+                  </div>
+                  {/* AI Chat input overlay: partly overlapping image on bottom-right */}
+                  <div
+                    className="ai-chat-input d-none d-md-flex"
+                    style={{
+                      position: 'absolute',
+                      right: '-40px',
+                      bottom: '10%',
+                      zIndex: 10,
+                      background: '#fff',
+                      padding: '0.75rem 1rem',
+                      borderRadius: '0.5rem',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <form
+                      onSubmit={async e => {
+                        e.preventDefault();
+                        const prompt = inputRef.current?.value.trim();
+                        if (!prompt) return;
+                        inputRef.current!.value = '';
+                        try {
+                          const res = await fetch('/api/chat', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ prompt }),
+                          });
+                          const json = await res.json();
+                          if (json.error) throw new Error(json.error);
+                          const reply = json.text?.trim() ?? '';
+                          setMessages(prev => {
+                            const next = prev.length === 3 ? [...prev.slice(1), reply] : [...prev, reply];
+                            return next;
+                          });
+                        } catch (err) {
+                          console.error('Chat error:', err);
+                        }
+                      }}
+                      style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+                    >
+                      <input
+                        ref={inputRef}
+                        type="text"
+                        placeholder="Ask me something..."
+                        style={{
+                          border: '1px solid #ddd',
+                          borderRadius: '0.25rem',
+                          padding: '0.5rem 0.75rem',
+                          minWidth: '200px',
+                        }}
+                      />
+                      <button
+                        type="submit"
+                        style={{
+                          background: '#0070f3',
+                          border: 'none',
+                          color: '#fff',
+                          padding: '0.5rem 0.75rem',
+                          borderRadius: '0.25rem',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        Send
+                      </button>
+                    </form>
+
+                    {/* thought bubbles display */}
+                    {messages.map((msg, idx) => {
+                      // position order: 0=left,1=middle,2=right
+                      const positions = [
+                        { right: '120px', bottom: '60%' },
+                        { right: '40px', bottom: '65%' },
+                        { right: '-80px', bottom: '58%' },
+                      ];
+                      const pos = positions[idx] || positions[2];
+                      return (
+                        <div
+                          key={idx + msg}
+                          style={{
+                            position: 'absolute',
+                            transition: 'all 0.5s ease',
+                            ...pos,
+                          }}
+                        >
+                          <ThoughtBubble text={msg} width={160} />
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
