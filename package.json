@@ -1,0 +1,25 @@
+{
+  "name": "jessewestlund",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "npm --prefix ./jesse-next-js install",
+    "predev": "npm --prefix ./jesse-next-js install",
+    "dev": "npm --prefix ./jesse-next-js run dev",
+    "build": "npm --prefix ./jesse-next-js run build",
+    "start": "npm --prefix ./jesse-next-js run start",
+    "lint": "npm --prefix ./jesse-next-js run lint",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bigwest1/jesse_ux.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bigwest1/jesse_ux/issues"
+  },
+  "homepage": "https://github.com/bigwest1/jesse_ux#readme",
+  "description": ""
+}
